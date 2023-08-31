@@ -1,0 +1,72 @@
+{
+    "name": "eon/backend-test",
+    "type": "project",
+    "description": "Backend test project.",
+    "license": "MIT",
+    "require": {
+        "php": "^8.2",
+        "ext-dom": "*",
+        "guzzlehttp/guzzle": "^7.8",
+        "laravel/framework": "^9.52",
+        "laravel/sanctum": "^3.2",
+        "laravel/tinker": "^2.8"
+    },
+    "require-dev": {
+        "fakerphp/faker": "^1.23",
+        "laravel/pint": "^1.12",
+        "laravel/sail": "^1.24",
+        "mockery/mockery": "^1.6",
+        "nunomaduro/collision": "^6.4",
+        "phpunit/phpunit": "^9.6",
+        "spatie/laravel-ignition": "^1.6",
+        "friendsofphp/php-cs-fixer": "^3.25"
+    },
+    "autoload": {
+        "psr-4": {
+            "EON\\": "src/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": [
+            "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
+            "@php artisan package:discover --ansi"
+        ],
+        "post-update-cmd": [
+            "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
+        ],
+        "csf": [
+            "./vendor/bin/php-cs-fixer fix src --using-cache=no --allow-risky=yes",
+            "./vendor/bin/php-cs-fixer fix tests --using-cache=no --allow-risky=yes",
+            "./vendor/bin/php-cs-fixer fix config --using-cache=no --allow-risky=yes",
+            "./vendor/bin/php-cs-fixer fix public --using-cache=no --allow-risky=yes"
+        ],
+        "post-root-package-install": [
+            "@php -r \"file_exists('.env') || copy('.env.example', '.env');\""
+        ],
+        "post-create-project-cmd": [
+            "@php artisan key:generate --ansi"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "dont-discover": []
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
