@@ -1,12 +1,8 @@
-
 <h1 align="center">Тестовое задание для Backend разработчика</h1>
 <p align="center"><a href="https://eon.estate" target="_blank"><img src="https://eon.estate/static/images/logoAndName.svg" width="200"></a></p>
 <p align="center">
-<img src="https://github.com/eon-spb/backend-test/workflows/notify_about_push/badge.svg?branch=master">
-<img src="https://github.com/eon-spb/backend-test/workflows/notify_about_new_pull_request/badge.svg?branch=master">
-</p>
-
 Добро пожаловать на тестирование для Backend разработчика.<br>Мы ценим ваше время и поэтому подготовили для вас небольшое задание.
+</p>
 
 ### Задание
 Создать команду, которая будет парсить xml файл `storage/tmp/test.xml` и сохранять элементы `apartments` в базу данных. 
