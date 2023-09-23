@@ -29,5 +29,6 @@ class XMLParser extends Command
     public function handle(XMLParseAction $action)
     {
         $action->handle('storage/tmp/test.xml');
+        $this->info('Парсинг успешно завершён');
     }
 }

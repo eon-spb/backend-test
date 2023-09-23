@@ -2,22 +2,45 @@
 
 namespace EON\XML\Services;
 
+ini_set('memory_limit', '-1');
+
 use EON\XML\Contracts\XMLParserContract;
-use Illuminate\Support\Facades\File;
-use SimpleXMLElement;
+use XMLReader;
 
 class XMLParserNative implements XMLParserContract
 {
 
-    private function getRaws(string $file): SimpleXMLElement
+    private function getRaws(string $file)
     {
-        $fileDataRaws = File::get($file);
-        return new SimpleXMLElement($fileDataRaws);
+        $reader = new XMLReader();
+        $reader->open($file);
+        while ($reader->read()) {
+            if ($reader->nodeType == XMLReader::ELEMENT && $reader->name === 'apartment') yield $reader;
+        }
+        $reader->close();
+    }
+
+    private function prepareRawData(string $file)
+    {
+        $createData = [];
+
+        foreach ($this->getRaws($file) as $readerRaw) {
+            $createData[] = [
+                $readerRaw->getAttribute('id'),
+                $readerRaw->getAttribute('s_total'),
+                $readerRaw->getAttribute('s_living'),
+                $readerRaw->getAttribute('s_kitchen'),
+                (int)$readerRaw->getAttribute('height'),
+                $readerRaw->getAttribute('price'),
+                (int)$readerRaw->getAttribute('floor') ?? 0,
+            ];
+        }
+
+        return $createData;
     }
 
     public function getApartmentData(string $file): array
     {
-        $simpleXMLElement = $this->getRaws($file);
-        return [];
+        return $this->prepareRawData($file);
     }
 }

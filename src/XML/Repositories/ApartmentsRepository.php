@@ -9,7 +9,7 @@ use EON\XML\Abstracts\Repositories;
 
 class ApartmentsRepository extends Repositories
 {
-    public function createRepository(
+    public function createApartment(
         string $uaid,
         int $sTotal,
         int $sLiving,
