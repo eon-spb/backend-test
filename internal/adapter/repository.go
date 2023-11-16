@@ -1,7 +1,10 @@
 package adapter
 
-import "context"
+import (
+	"backend-test/internal/domain"
+	"context"
+)
 
 type User_adapter interface {
-	ParseXML(ctx context.Context) error
+	SaveApartments(ctx context.Context, data []domain.Apartments) error
 }

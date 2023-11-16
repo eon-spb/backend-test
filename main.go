@@ -1,7 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"backend-test/internal/parser"
+)
 
 func main() {
-	fmt.Println("DOCKER WORK U KNOW")
+	parser.Parse()
 }

@@ -2,7 +2,7 @@ package postgres
 
 import (
 	"context"
-	"os"
+	"fmt"
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
@@ -13,12 +13,16 @@ type Pg_Client interface {
 	Query(ctx context.Context, sql string, args ...any) (pgx.Rows, error)
 
 	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
+
+	Begin() (*Tx, error)
 }
 
 func New_Pg_client(logger *slog.Logger) (pool *pgxpool.Pool, err error) {
 	ctx := context.Background()
-	// dsn := create_dsn(config)
-	dsn := os.Getenv("POSTGRESQL_URL")
+
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable") //TODO add Args
+
+	// postgres://YourUserName:YourPassword@YourHostname:5432/YourDatabaseName"
 	logger.Debug(dsn)
 	pool, err = pgxpool.New(ctx, dsn)
 	if err != nil {
