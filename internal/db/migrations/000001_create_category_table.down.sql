@@ -1,0 +1,1 @@
+DROP TABLE  Apartments if exists; 

@@ -1,0 +1,3 @@
+migrate -path internal/db/migrations  -database "postgres://postgres:postgres@localhost:5435/backend_Interview?sslmode=disable" down
+docker compose -f docker-compose.dev.yml exec db psql -U postgres -d backend_Interview
+docker compose -f docker-compose.dev.yml up
