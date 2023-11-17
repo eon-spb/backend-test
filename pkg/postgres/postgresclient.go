@@ -1,6 +1,7 @@
 package postgres
 
 import (
+	"backend-test/internal/config"
 	"context"
 	"fmt"
 
@@ -14,15 +15,13 @@ type Pg_Client interface {
 
 	QueryRow(ctx context.Context, sql string, args ...any) pgx.Row
 
-	Begin() (*Tx, error)
+	Begin(ctx context.Context) (pgx.Tx, error)
 }
 
-func New_Pg_client(logger *slog.Logger) (pool *pgxpool.Pool, err error) {
+func New_Pg_client(cfg config.Db_config, logger *slog.Logger) (pool *pgxpool.Pool, err error) {
 	ctx := context.Background()
 
-	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable") //TODO add Args
-
-	// postgres://YourUserName:YourPassword@YourHostname:5432/YourDatabaseName"
+	dsn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s?sslmode=disable", cfg.Username, cfg.Password, cfg.Host, cfg.Port, cfg.Dbname)
 	logger.Debug(dsn)
 	pool, err = pgxpool.New(ctx, dsn)
 	if err != nil {
@@ -33,11 +32,3 @@ func New_Pg_client(logger *slog.Logger) (pool *pgxpool.Pool, err error) {
 
 	return pool, err
 }
-
-// func create_dsn(config *config.Config) string {
-// 	return fmt.Sprintf(
-// 		"postgresql://%s:%s@%s:%s/%s", config.DataBase.DB_user, config.DataBase.DB_password,
-// 		config.DataBase.DB_adress, config.DataBase.DB_port,
-// 		config.DataBase.DB_name)
-
-// }

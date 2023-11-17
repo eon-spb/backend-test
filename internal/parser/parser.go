@@ -2,28 +2,20 @@ package parser
 
 import (
 	"backend-test/internal/domain"
-	"encoding/xml"
-	"fmt"
-	"io/ioutil"
-	"os"
+	"backend-test/pkg/parser"
+
+	"github.com/sagikazarmark/slog-shim"
 )
 
-func Parse() {
-	xmlData, err := os.Open("test.xml")
+func Parse(path string, log *slog.Logger) []domain.Apartments {
+	pars := parser.NewParser()
+
+	apartments, err := pars.Parse(path, log)
 
 	if err != nil {
-		panic(err)
-	}
-	xmlFile, _ := ioutil.ReadAll(xmlData)
-
-	var data domain.Data
-	err = xml.Unmarshal([]byte(xmlFile), &data)
-	if err != nil {
-		fmt.Printf("Error unmarshalling XML: %v\n", err)
-
-	}
-	for i := range data.Apartments {
-		fmt.Printf("%+v\n", data.Apartments[i])
+		log.Debug("Error Parse: %s", err)
 	}
 
+	log.Debug("Complited get data from .xml")
+	return apartments.Apartments
 }

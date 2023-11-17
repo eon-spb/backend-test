@@ -5,25 +5,27 @@ import (
 	"encoding/xml"
 	"io/ioutil"
 	"os"
+
+	"github.com/sagikazarmark/slog-shim"
 )
 
 type Parser struct {
 }
 
 type IParser interface {
-	Parse(path string) (*domain.Data, error) //!!todo return *parse file
-
+	Parse(path string, logger *slog.Logger) (*domain.Data, error)
 }
 
 func NewParser() IParser {
 	return &Parser{}
 }
 
-func (p *Parser) Parse(path string) (*domain.Data, error) {
+func (p *Parser) Parse(path string, logger *slog.Logger) (*domain.Data, error) {
 	xmlData, err := os.Open(path)
 
 	if err != nil {
-		panic(err)
+		logger.Debug("Error %s", err)
+		return nil, err
 	}
 	xmlFile, _ := ioutil.ReadAll(xmlData)
 
@@ -32,12 +34,9 @@ func (p *Parser) Parse(path string) (*domain.Data, error) {
 	var data domain.Data
 	err = xml.Unmarshal([]byte(xmlFile), &data)
 	if err != nil {
-		// fmt.Printf("Error unmarshalling XML: %v\n", err)
-		panic(err)
+		logger.Debug("Error unmarshalling XML: %v\n", err)
+		return nil, err
 
 	}
-	// for i := range data.Apartments {
-	// 	fmt.Printf("%+v\n", data.Apartments[i])
-	// }
 	return &data, nil
 }

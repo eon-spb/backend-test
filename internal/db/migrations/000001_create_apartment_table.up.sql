@@ -3,7 +3,7 @@ CREATE TABLE Apartments (
     S_total VARCHAR,
     S_living VARCHAR,
     S_kitchen VARCHAR,
-    Height INTEGER NULL,
+    Height INTEGER,
     Price VARCHAR,
-    Floor INTEGER NULL
+    Floor INTEGER
 );

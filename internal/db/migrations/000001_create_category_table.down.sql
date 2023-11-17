@@ -1,1 +1,1 @@
-DROP TABLE  Apartments if exists; 
+DROP TABLE IF EXISTS Apartments;
