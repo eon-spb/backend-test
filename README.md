@@ -80,6 +80,8 @@ docker compose -f docker-compose.dev.yml exec db psql -U postgres -d backend_Int
 
 
 Чтобы запустить процесс в фоновом режиме, использовать команду `nohup  ./build/application &` для поиска процесса `pgrep application`. 
-Чтобы убить процесс, использовать команду `pgrep application` и `kill ID` из pggrep
+Чтобы убить процесс, использовать команду `pgrep application` и `kill PID` из pggrep 
+Чтобы убить процесс на Windows, необходимо вызвать команду `tasklist` и с помощью CTRL + F найти процесс с именем application.exe
+После чего вызвать команду `taskkill /F /PID 1234`
 
 ``` 
