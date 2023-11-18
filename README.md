@@ -57,7 +57,7 @@ php artisan test-xml:create
 ``` 
 
 3) Golang 
-<a href="https://www.docker.com/products/docker-desktop/" target="_blank">Устанавливаем Golang</a>
+<a href="https://go.dev/doc/install" target="_blank">Устанавливаем Golang</a>
 
 
 
