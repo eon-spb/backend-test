@@ -13,14 +13,11 @@ import (
 	"github.com/sagikazarmark/slog-shim"
 )
 
-var isFirstRun = true
-
 func Setup(ctx context.Context, cfg *config.Db_config, logger *slog.Logger, adapter adapter.Adapter) {
 
 	exitChan := make(chan os.Signal, 1)
 	signal.Notify(exitChan, syscall.SIGINT, syscall.SIGTERM)
 
-	// Канал для периодических задач
 	ticker := time.NewTicker(1 * time.Minute)
 
 	dump := parser.Parse(cfg.Application_cfg.Path_xml, logger)

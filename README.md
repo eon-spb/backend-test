@@ -39,7 +39,47 @@ php artisan test-xml:create
 
 ### Необходимые инструменты:
 1) Docker
-2) go-migrate 
+<a href="https://www.docker.com/products/docker-desktop/" target="_blank">Устанавливаем докер</a>
+
+2) go-migrate
+``` shell 
+ Mac
+ 
+ brew install golang-migrate
+ 
+ Windows
+ 
+ В котрытом PowerShell вводим следующие команды 
+ 
+ iwr -useb get.scoop.sh | iex
+ 
+ scoop install migrate
+``` 
+
 3) Golang 
+<a href="https://www.docker.com/products/docker-desktop/" target="_blank">Устанавливаем Golang</a>
 
 
+
+### Запуск
+
+Клонируем проект, открываем консоль в корневой директории проекта и вводим слудующие команды 
+```shell
+docker compose -f docker-compose.dev.yml up (Данная команда запустит базу данных "postgresql")
+
+Запускаем миграцию, для инициализации таблицы 
+
+migrate -path internal/db/migrations  -database "postgres://postgres:postgres@localhost:5435/backend_Interview?sslmode=disable" up
+
+Далее запускаем файл проекта, который будет запускаться каждую минуту (для тестирования) 
+./build/application 
+
+Данная команда позволит зайти в контейнер и самостоятельно убедиться в наличии данных в безе
+Запускаем команду в терминале и выполняем команду Select * from Apartments;
+docker compose -f docker-compose.dev.yml exec db psql -U postgres -d backend_Interview 
+
+
+Чтобы запустить процесс в фоновом режиме, использовать команду `nohup  ./build/application &` для поиска процесса `pgrep application`. 
+Чтобы убить процесс, использовать команду `pgrep application` и `kill ID` из pggrep
+
+``` 
