@@ -53,6 +53,12 @@ return [
     */
 
     'channels' => [
+        'parser' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/parser.log'),
+            'replace_placeholders' => true,
+        ],
+
         'stack' => [
             'driver' => 'stack',
             'channels' => ['single'],

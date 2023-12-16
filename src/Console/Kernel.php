@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace EON\Console;
 
+use EON\Console\Commands\XmlParserCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,7 +18,15 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // $schedule->command('inspire')->hourly();
+        $outputFilePath = storage_path('logs/parser.log');
+
+        /**
+         * Выполняется раз в 4 часа
+         * В единственном экземпляре
+         * Запись логов в parser.log
+         */
+        $schedule->command(XmlParserCommand::class)
+            ->everyFourHours()->withoutOverlapping()->appendOutputTo($outputFilePath);
     }
 
     /**
